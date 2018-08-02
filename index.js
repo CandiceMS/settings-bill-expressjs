@@ -10,6 +10,9 @@ const assert = require('assert');
 let settingsBill = require('./public/settings');
 let setBill = settingsBill();
 
+// let settings = {};
+// let calculate = {};
+
 let PORT = process.env.PORT || 3300;
 
 app.engine('handlebars', exphbs({
@@ -45,7 +48,6 @@ app.post('/settings', function(req, res) {
 
   res.render('home', settings);
 
-  // console.log(settings);
 });
 
 app.post('/action', function(req, res) {
@@ -60,13 +62,6 @@ app.post('/action', function(req, res) {
     smsTotal: setBill.calculatedSms(),
     total: setBill.calculatedTotal()
   };
-
-  // let settings = {
-  //   callVal: setBill.value_Call(req.body.callInput),
-  //   smsVal: setBill.value_Sms(req.body.smsInput),
-  //   warningVal: setBill.value_Warning(req.body.warningInput),
-  //   criticalVal: setBill.value_Critical(req.body.criticalInput)
-  // }
 
   res.render('home', calculate);
 

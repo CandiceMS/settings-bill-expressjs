@@ -63,7 +63,7 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     function calculatedTotal() {
       return combinedTotal.toFixed(2);
     }
-
+  
   return {
     value_Call,
     value_Sms,
