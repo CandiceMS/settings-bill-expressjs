@@ -45,34 +45,39 @@
                       <td>
                         <a href="/actions/calls">Call total</a>
                       </td>
-                      <td>R<span placeholder="0.00" class="callTotalSettings">{{callTotal}}</span> </td>
+                      <td>R<span placeholder="0.00" class="callTotalSettings">{{callsWithSettings}}</span> </td>
                     </tr>
                     <tr>
                       <td>
                         <a href="/actions/sms">SMS total</a>
                       </td>
-                      <td>R<span placeholder="0.00" class="smsTotalSettings">{{smsTotal}}</span> </td>
+                      <td>R<span placeholder="0.00" class="smsTotalSettings">{{smsWithSettings}}</span> </td>
                     </tr>
                     <tr>
                       <td>
                         <a href="/actions">Total</a>
                       </td>
-                      <td> R<span placeholder="0.00" class="totalSettings">{{total}}</span> </td>
+                      <td> R<span placeholder="0.00" class="totalSettings">{{combinedTotal}}</span> </td>
                     </tr>
                   </table>
-
+                  <div class="">
+                    <form class="" action="clear" method="post">
+                      <button class="button-primary" type="submit" name="clearButton">Clear All Values</button>
+                    </form>
+                  </div>
             </div>
+
             <div class="six columns">
               <h5>Settings</h5>
               <form class="" action="/settings" method="post">
                 <label for="callInput">Call cost</label>
-                <input name="callInput" class="u-full-width callCostSetting" type="number" placeholder="eg. 2.55" value="{{callVal}}">
+                <input name="callInput" class="u-full-width callCostSetting" type="number" placeholder="eg. 2.55" value="{{callValue}}">
                 <label for="smsInput">SMS cost</label>
-                <input name="smsInput" class="u-full-width smsCostSetting" type="number" placeholder="eg. 0.65" value="{{smsVal}}" >
+                <input name="smsInput" class="u-full-width smsCostSetting" type="number" placeholder="eg. 0.65" value="{{smsValue}}" >
                 <label for="warningInput">Warning level</label>
-                <input name="warningInput" class="u-full-width warningLevelSetting " type="number" placeholder="eg. 30.00" class="warningLevel" value="{{warningVal}}" >
+                <input name="warningInput" class="u-full-width warningLevelSetting " type="number" placeholder="eg. 30.00" class="warningLevel" value="{{warningValue}}" >
                 <label for="criticalInput">Critical level</label>
-                <input name="criticalInput" class="u-full-width criticalLevelSetting" type="number" placeholder="eg. 65.00" value="{{criticalVal}}" >
+                <input name="criticalInput" class="u-full-width criticalLevelSetting" type="number" placeholder="eg. 65.00" value="{{criticalValue}}" >
                 <button class="button-primary updateSettings" type="submit" name="updateButton">Update settings</button>
               </form>
             </div>

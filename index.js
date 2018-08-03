@@ -10,9 +10,6 @@ const assert = require('assert');
 let settingsBill = require('./public/settings');
 let setBill = settingsBill();
 
-// let settings = {};
-// let calculate = {};
-
 let PORT = process.env.PORT || 3300;
 
 app.engine('handlebars', exphbs({
@@ -39,14 +36,12 @@ app.get('/', function(req, res) {
 
 app.post('/settings', function(req, res) {
 
-  let settings = {
-    callVal: setBill.value_Call(req.body.callInput),
-    smsVal: setBill.value_Sms(req.body.smsInput),
-    warningVal: setBill.value_Warning(req.body.warningInput),
-    criticalVal: setBill.value_Critical(req.body.criticalInput)
-  }
+    setBill.value_Call(req.body.callInput);
+    setBill.value_Sms(req.body.smsInput);
+    setBill.value_Warning(req.body.warningInput);
+    setBill.value_Critical(req.body.criticalInput);
 
-  res.render('home', settings);
+  res.render('home', setBill.returnAll());
 
 });
 
@@ -57,12 +52,20 @@ app.post('/action', function(req, res) {
   setBill.calculate_CallSms(type);
   setBill.calculate_Total();
 
-  let calculate = {
-    callTotal: setBill.calculatedCalls(),
-    smsTotal: setBill.calculatedSms(),
-    total: setBill.calculatedTotal()
-  };
+  res.render('home', setBill.returnAll());
 
-  res.render('home', calculate);
+});
 
+app.post('/clear', function(req, res){
+  
+  callsWithSettings = 0;
+  smsWithSettings = 0;
+  combinedTotal = 0;
+
+  callValue = 0;
+  smsValue = 0;
+  warningValue = 0;
+  criticalValue = 0;
+
+  res.render('home');
 });

@@ -13,19 +13,15 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
 
   function value_Call(callInput) {
     callValue = parseFloat(callInput);
-    return callValue;
   }
   function value_Sms(smsInput) {
     smsValue = parseFloat(smsInput);
-    return smsValue;
   }
   function value_Warning(warningInput) {
     warningValue = parseFloat(warningInput);
-    return warningValue;
   }
   function value_Critical(criticalInput) {
     criticalValue = parseFloat(criticalInput);
-    return criticalValue;
   }
 
   function calculate_CallSms(selectedItem) {
@@ -63,7 +59,19 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     function calculatedTotal() {
       return combinedTotal.toFixed(2);
     }
-  
+
+    function returnAll() {
+      return {
+        callValue,
+        smsValue,
+        warningValue,
+        criticalValue,
+        callsWithSettings,
+        smsWithSettings,
+        combinedTotal
+      }
+    }
+
   return {
     value_Call,
     value_Sms,
@@ -74,6 +82,7 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     calculatedSms,
     calculate_Total,
     critical,
-    calculatedTotal
+    calculatedTotal,
+    returnAll
   }
 };
