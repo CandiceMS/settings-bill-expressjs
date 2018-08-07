@@ -1,5 +1,3 @@
-// this file holds all function imports and setups
-
 const express = require("express");
 const app = express();
 const exphbs = require('express-handlebars');
@@ -50,6 +48,7 @@ app.post('/action', function(req, res) {
   let type = req.body.billItemType;
 
   setBill.calculate_CallSms(type);
+  setBill.record();
   setBill.calculate_Total();
 
   res.render('home', setBill.returnAll());
@@ -57,15 +56,14 @@ app.post('/action', function(req, res) {
 });
 
 app.post('/clear', function(req, res){
-  
-  callsWithSettings = 0;
-  smsWithSettings = 0;
-  combinedTotal = 0;
+  res.render('home', setBill.clearAll());
+});
 
-  callValue = 0;
-  smsValue = 0;
-  warningValue = 0;
-  criticalValue = 0;
+app.get('/actions', function(req, res) {
 
-  res.render('home');
+  res.render('actions', setBill.returnAll());
+});
+
+app.get('/actions:type', function(req, res){
+  res.render('');
 });

@@ -11,6 +11,10 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
   var warningValue = 0;
   var criticalValue = 0;
 
+  let cost = '';
+  let type = '';
+  let timestamp = '';
+
   function value_Call(callInput) {
     callValue = parseFloat(callInput);
   }
@@ -25,27 +29,32 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
   }
 
   function calculate_CallSms(selectedItem) {
-
     if (critical()){
       return;
     }
     else if (selectedItem === "call") {
       callsWithSettings += callValue;
+      cost.push(callValue);
+      type.push(selectedItem);
+      timestamp.push(new Date());
     }
     else if (selectedItem === "sms") {
       smsWithSettings += smsValue;
+      cost.push(smsValue);
+      type.push(selectedItem);
+      timestamp.push(new Date());
     }
   }
 
-    function calculatedCalls() {
+    let calculatedCalls = function() {
       return callsWithSettings.toFixed(2);
     }
 
-    function calculatedSms() {
+    let calculatedSms = function() {
       return smsWithSettings.toFixed(2);
     }
 
-    function calculate_Total() {
+    let calculate_Total = function() {
       combinedTotal = callsWithSettings + smsWithSettings;
     }
 
@@ -56,8 +65,18 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
      return false;
    }
 
-    function calculatedTotal() {
+    let calculatedTotal = function() {
       return combinedTotal.toFixed(2);
+    }
+
+    let addClasses = function () {
+      if (combinedTotal >= warningValue && combinedTotal < criticalValue) {
+        return "warning";
+      }
+
+      if (combinedTotal > warningValue && combinedTotal >= criticalValue) {
+        return "danger";
+      }
     }
 
     function returnAll() {
@@ -66,10 +85,24 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
         smsValue,
         warningValue,
         criticalValue,
-        callsWithSettings,
-        smsWithSettings,
-        combinedTotal
+        calculatedCalls,
+        calculatedSms,
+        calculatedTotal,
+        addClasses,
+        cost,
+        type,
+        timestamp
       }
+    }
+    let clearAll = function() {
+      callsWithSettings = 0;
+      smsWithSettings = 0;
+      combinedTotal = 0;
+
+      callValue = 0;
+      smsValue = 0;
+      warningValue = 0;
+      criticalValue = 0;
     }
 
   return {
@@ -83,6 +116,8 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     calculate_Total,
     critical,
     calculatedTotal,
-    returnAll
+    returnAll,
+    addClasses,
+    clearAll
   }
-};
+}
