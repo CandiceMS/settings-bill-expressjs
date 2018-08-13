@@ -48,7 +48,6 @@ app.post('/action', function(req, res) {
   let type = req.body.billItemType;
 
   setBill.calculate_CallSms(type);
-  setBill.record();
   setBill.calculate_Total();
 
   res.render('home', setBill.returnAll());
@@ -60,7 +59,6 @@ app.post('/clear', function(req, res){
 });
 
 app.get('/actions', function(req, res) {
-
   res.render('actions', setBill.returnAll());
 });
 

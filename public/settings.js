@@ -1,5 +1,3 @@
-// factory function
-
 module.exports = function(callInput,smsInput,warningInput,criticalInput,selectedItem) {
 
   var callsWithSettings = 0;
@@ -14,6 +12,8 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
   let cost = '';
   let type = '';
   let timestamp = '';
+  let action = {};
+  let actions = [];
 
   function value_Call(callInput) {
     callValue = parseFloat(callInput);
@@ -34,16 +34,18 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     }
     else if (selectedItem === "call") {
       callsWithSettings += callValue;
-      cost.push(callValue);
-      type.push(selectedItem);
-      timestamp.push(new Date());
+      cost = callValue;
+      type = selectedItem;
+      timestamp = new Date();
     }
     else if (selectedItem === "sms") {
       smsWithSettings += smsValue;
-      cost.push(smsValue);
-      type.push(selectedItem);
-      timestamp.push(new Date());
+      cost = smsValue;
+      type = selectedItem;
+      timestamp = new Date();
     }
+    record();
+    pushAction();
   }
 
     let calculatedCalls = function() {
@@ -78,6 +80,20 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
         return "danger";
       }
     }
+    function record() {
+      action = {
+        type,
+        cost,
+        timestamp
+      }
+      // console.log(action);
+      // return action;
+    }
+
+    function pushAction() {
+      actions.push(action);
+      console.log(actions);
+    }
 
     function returnAll() {
       return {
@@ -91,7 +107,9 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
         addClasses,
         cost,
         type,
-        timestamp
+        timestamp,
+        action,
+        actions
       }
     }
     let clearAll = function() {
@@ -118,6 +136,8 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     calculatedTotal,
     returnAll,
     addClasses,
-    clearAll
+    clearAll,
+    record,
+    pushAction
   }
 }
