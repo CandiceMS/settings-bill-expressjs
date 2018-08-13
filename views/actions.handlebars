@@ -27,9 +27,11 @@
     <th>Cost</th>
     <th>TimeStamp</th>
   </tr>
+  {{#each actions}}
   <tr>
     <td>{{type}}</td>
     <td>{{cost}}</td>
     <td>{{timestamp}}</td>
   </tr>
+  {{/each}}
 </table>

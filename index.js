@@ -59,7 +59,7 @@ app.post('/clear', function(req, res){
 });
 
 app.get('/actions', function(req, res) {
-  res.render('actions', setBill.returnAll());
+  res.render('actions', { actions: setBill.returnAll().actions });
 });
 
 app.get('/actions:type', function(req, res){
