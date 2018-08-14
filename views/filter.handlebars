@@ -27,12 +27,15 @@
     <th>Cost</th>
     <th>TimeStamp</th>
   </tr>
-  {{#each actionsList}}
+  {{#each actionFilter}}
   <tr>
     <td>{{type}}</td>
     <td>{{cost}}</td>
     <td>{{timestamp}}</td>
-    <td>{{timeAgo}}</td>
   </tr>
   {{/each}}
+  <tr>
+    <td>Total:</td>
+    <td>{{totalForAction}}</td>
+  </tr>
 </table>

@@ -1,4 +1,6 @@
-module.exports = function(callInput,smsInput,warningInput,criticalInput,selectedItem) {
+module.exports = function(callInput, smsInput, warningInput, criticalInput, selectedItem) {
+
+const moment = require('moment');
 
   var callsWithSettings = 0;
   var smsWithSettings = 0;
@@ -18,27 +20,28 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
   function value_Call(callInput) {
     callValue = parseFloat(callInput);
   }
+
   function value_Sms(smsInput) {
     smsValue = parseFloat(smsInput);
   }
+
   function value_Warning(warningInput) {
     warningValue = parseFloat(warningInput);
   }
+
   function value_Critical(criticalInput) {
     criticalValue = parseFloat(criticalInput);
   }
 
   function calculate_CallSms(selectedItem) {
-    if (critical()){
+    if (critical()) {
       return;
-    }
-    else if (selectedItem === "call") {
+    } else if (selectedItem === "call") {
       callsWithSettings += callValue;
       cost = callValue;
       type = selectedItem;
       timestamp = new Date();
-    }
-    else if (selectedItem === "sms") {
+    } else if (selectedItem === "sms") {
       smsWithSettings += smsValue;
       cost = smsValue;
       type = selectedItem;
@@ -48,80 +51,107 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     pushAction();
   }
 
-    let calculatedCalls = function() {
-      return callsWithSettings.toFixed(2);
+  function record() {
+    action = {
+      type,
+      cost,
+      timestamp
     }
+  }
 
-    let calculatedSms = function() {
-      return smsWithSettings.toFixed(2);
-    }
+  function pushAction() {
+    actions.push(action);
+  }
 
-    let calculate_Total = function() {
-      combinedTotal = callsWithSettings + smsWithSettings;
-    }
+  function filterActions(type) {
+    let filtered = [];
 
-   function critical() {
-     if (combinedTotal >= criticalValue) {
-       return true;
-     }
-     return false;
-   }
-
-    let calculatedTotal = function() {
-      return combinedTotal.toFixed(2);
-    }
-
-    let addClasses = function () {
-      if (combinedTotal >= warningValue && combinedTotal < criticalValue) {
-        return "warning";
-      }
-
-      if (combinedTotal > warningValue && combinedTotal >= criticalValue) {
-        return "danger";
+    for (let i = 0; i < actions.length; i++) {
+      if (actions[i].type === type) {
+        filtered.push(actions[i]);
       }
     }
-    function record() {
-      action = {
-        type,
-        cost,
-        timestamp
-      }
-      // console.log(action);
-      // return action;
-    }
+    return filtered;
+  }
 
-    function pushAction() {
-      actions.push(action);
-      console.log(actions);
-    }
+  function actionTotal(type) {
+    let total = 0;
 
-    function returnAll() {
-      return {
-        callValue,
-        smsValue,
-        warningValue,
-        criticalValue,
-        calculatedCalls,
-        calculatedSms,
-        calculatedTotal,
-        addClasses,
-        cost,
-        type,
-        timestamp,
-        action,
-        actions
+    for (let i = 0; i < actions.length; i++) {
+      if (actions[i].type === type) {
+        total += actions[i].cost;
       }
     }
-    let clearAll = function() {
-      callsWithSettings = 0;
-      smsWithSettings = 0;
-      combinedTotal = 0;
+    return total;
+  }
 
-      callValue = 0;
-      smsValue = 0;
-      warningValue = 0;
-      criticalValue = 0;
+  function time(timestamp) {
+    let timeAgo = '';
+    for (var i = 0; i < actions.length; i++) {
+      timeAgo = moment(actions[i].timestamp).fromNow();
     }
+    return timeAgo;
+  }
+
+  let calculatedCalls = function() {
+    return callsWithSettings.toFixed(2);
+  }
+
+  let calculatedSms = function() {
+    return smsWithSettings.toFixed(2);
+  }
+
+  let calculate_Total = function() {
+    combinedTotal = callsWithSettings + smsWithSettings;
+  }
+
+  function critical() {
+    if (combinedTotal >= criticalValue) {
+      return true;
+    }
+    return false;
+  }
+
+  let calculatedTotal = function() {
+    return combinedTotal.toFixed(2);
+  }
+
+  let addClasses = function() {
+    if (combinedTotal >= warningValue && combinedTotal < criticalValue) {
+      return "warning";
+    }
+
+    if (combinedTotal > warningValue && combinedTotal >= criticalValue) {
+      return "danger";
+    }
+  }
+
+  function returnAll() {
+    return {
+      callValue,
+      smsValue,
+      warningValue,
+      criticalValue,
+      calculatedCalls,
+      calculatedSms,
+      calculatedTotal,
+      addClasses,
+      actions
+    }
+  }
+  let clearAll = function() {
+    callsWithSettings = 0;
+    smsWithSettings = 0;
+    combinedTotal = 0;
+
+    callValue = 0;
+    smsValue = 0;
+    warningValue = 0;
+    criticalValue = 0;
+
+    actions = [];
+
+  }
 
   return {
     value_Call,
@@ -138,6 +168,9 @@ module.exports = function(callInput,smsInput,warningInput,criticalInput,selected
     addClasses,
     clearAll,
     record,
-    pushAction
+    pushAction,
+    filterActions,
+    actionTotal,
+    time
   }
 }

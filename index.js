@@ -34,13 +34,12 @@ app.get('/', function(req, res) {
 
 app.post('/settings', function(req, res) {
 
-    setBill.value_Call(req.body.callInput);
-    setBill.value_Sms(req.body.smsInput);
-    setBill.value_Warning(req.body.warningInput);
-    setBill.value_Critical(req.body.criticalInput);
+  setBill.value_Call(req.body.callInput);
+  setBill.value_Sms(req.body.smsInput);
+  setBill.value_Warning(req.body.warningInput);
+  setBill.value_Critical(req.body.criticalInput);
 
   res.render('home', setBill.returnAll());
-
 });
 
 app.post('/action', function(req, res) {
@@ -54,14 +53,20 @@ app.post('/action', function(req, res) {
 
 });
 
-app.post('/clear', function(req, res){
+app.post('/clear', function(req, res) {
   res.render('home', setBill.clearAll());
 });
 
 app.get('/actions', function(req, res) {
-  res.render('actions', { actions: setBill.returnAll().actions });
+  res.render('actions', {
+    actionsList: setBill.returnAll().actions,
+    timeAgo: setBill.time()
+  });
 });
 
-app.get('/actions:type', function(req, res){
-  res.render('');
+app.get('/actions/:type', function(req, res) {
+  res.render('filter', {
+    actionFilter: setBill.filterActions(req.params.type),
+    totalForAction: setBill.actionTotal(req.params.type)
+  });
 });
