@@ -1,6 +1,6 @@
 module.exports = function(callInput, smsInput, warningInput, criticalInput, selectedItem) {
 
-const moment = require('moment');
+ const moment = require('moment');
 
   var callsWithSettings = 0;
   var smsWithSettings = 0;
@@ -16,6 +16,7 @@ const moment = require('moment');
   let timestamp = '';
   let action = {};
   let actions = [];
+  let timeAgo = [];
 
   function value_Call(callInput) {
     callValue = parseFloat(callInput);
@@ -36,17 +37,19 @@ const moment = require('moment');
   function calculate_CallSms(selectedItem) {
     if (critical()) {
       return;
-    } else if (selectedItem === "call") {
+    }
+    else if (selectedItem === "call") {
       callsWithSettings += callValue;
       cost = callValue;
-      type = selectedItem;
-      timestamp = new Date();
-    } else if (selectedItem === "sms") {
+    }
+    else if (selectedItem === "sms") {
       smsWithSettings += smsValue;
       cost = smsValue;
-      type = selectedItem;
-      timestamp = new Date();
     }
+
+    type = selectedItem;
+    timestamp = new Date();
+
     record();
     pushAction();
   }
@@ -85,12 +88,11 @@ const moment = require('moment');
     return total;
   }
 
-  function time(timestamp) {
-    let timeAgo = '';
+  function time() {
     for (var i = 0; i < actions.length; i++) {
-      timeAgo = moment(actions[i].timestamp).fromNow();
+      let action = actions[i];
+      action.timeAgo = moment(action.timestamp).fromNow();
     }
-    return timeAgo;
   }
 
   let calculatedCalls = function() {
@@ -127,6 +129,7 @@ const moment = require('moment');
   }
 
   function returnAll() {
+    time();
     return {
       callValue,
       smsValue,
@@ -136,7 +139,8 @@ const moment = require('moment');
       calculatedSms,
       calculatedTotal,
       addClasses,
-      actions
+      actions,
+      timestamp
     }
   }
   let clearAll = function() {
@@ -152,6 +156,14 @@ const moment = require('moment');
     actions = [];
 
   }
+  // DELETE FUNCTION BELOW! PLUS RELEVANT RETURNS
+
+  // function test(){
+  // let timeToMoment = returnAll().timestamp;
+  //   let timeAgo = time(timeToMoment);
+  //   console.log(timeToMoment);
+  //   console.log(timeAgo);
+  // }
 
   return {
     value_Call,

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+// const moment = require('moment');
 
 const assert = require('assert');
 
@@ -60,7 +61,6 @@ app.post('/clear', function(req, res) {
 app.get('/actions', function(req, res) {
   res.render('actions', {
     actionsList: setBill.returnAll().actions,
-    timeAgo: setBill.time()
   });
 });
 
