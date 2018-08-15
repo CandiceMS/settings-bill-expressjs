@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 // const moment = require('moment');
 
-const assert = require('assert');
+// const assert = require('assert');
 
 let settingsBill = require('./public/settings');
 let setBill = settingsBill();

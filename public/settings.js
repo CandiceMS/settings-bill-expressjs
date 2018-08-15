@@ -154,16 +154,7 @@ module.exports = function(callInput, smsInput, warningInput, criticalInput, sele
     criticalValue = 0;
 
     actions = [];
-
   }
-  // DELETE FUNCTION BELOW! PLUS RELEVANT RETURNS
-
-  // function test(){
-  // let timeToMoment = returnAll().timestamp;
-  //   let timeAgo = time(timeToMoment);
-  //   console.log(timeToMoment);
-  //   console.log(timeAgo);
-  // }
 
   return {
     value_Call,
