@@ -82,9 +82,8 @@ describe('Input and update values to calculate', function(){
         assert.equal(23.00, threshold.calculatedTotal());
     });
   });
-
 // Test below fails: Assertion Error "warning" == undefined.
-// Investigate later and fix later
+// Investigate and fix later
 
     // it('should add the warning class when the total reaches warning level', function(){
     //
@@ -92,13 +91,7 @@ describe('Input and update values to calculate', function(){
     //
     //     classesTest.value_Warning(12);
     //     classesTest.value_Critical(20);
-    //     classesTest.value_Call(4)
-    //
-    //     classesTest.calculate_CallSms('call');
-    //     classesTest.calculate_CallSms('call');
-    //     classesTest.calculate_CallSms('call');
-
-    //       classesTest.calculatedTotal();
+    //       classesTest.calculatedTotal(12);
     //
     // assert.equal("warning", classesTest.addClasses());
     // });
