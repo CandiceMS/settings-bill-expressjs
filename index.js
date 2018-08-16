@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 // const assert = require('assert');
 
-let settingsBill = require('./public/settings');
+let settingsBill = require('./settings');
 let setBill = settingsBill();
 
 let PORT = process.env.PORT || 3300;
