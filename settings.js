@@ -2,14 +2,14 @@ module.exports = function(callInput, smsInput, warningInput, criticalInput, sele
 
  const moment = require('moment');
 
-  var callsWithSettings = 0;
-  var smsWithSettings = 0;
-  var combinedTotal = 0;
+  var callsWithSettings = 0.00;
+  var smsWithSettings = 0.00;
+  var combinedTotal = 0.00;
 
-  var callValue = 0;
-  var smsValue = 0;
-  var warningValue = 0;
-  var criticalValue = 0;
+  var callValue = '';
+  var smsValue = '';
+  var warningValue = '';
+  var criticalValue = '';
 
   let cost = '';
   let type = '';
@@ -144,14 +144,14 @@ module.exports = function(callInput, smsInput, warningInput, criticalInput, sele
     }
   }
   let clearAll = function() {
-    callsWithSettings = 0;
-    smsWithSettings = 0;
-    combinedTotal = 0;
+    callsWithSettings = 0.00;
+    smsWithSettings = 0.00;
+    combinedTotal = 0.00;
 
-    callValue = 0;
-    smsValue = 0;
-    warningValue = 0;
-    criticalValue = 0;
+    callValue = '';
+    smsValue = '';
+    warningValue = '';
+    criticalValue = '';
 
     actions = [];
   }
